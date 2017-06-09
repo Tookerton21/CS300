@@ -19,7 +19,6 @@ import javax.swing.*;
 public class Client extends JFrame implements ActionListener, Runnable {
 
     private JTextField userText;
-    //private JTextArea chatWindow;
 
     protected String userN;
     protected String passW;
@@ -42,10 +41,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
     protected String[] onlineList;
     protected ClientConnection cc;
     protected ClientChatting cChat;
-    //Connect c = new Connect().
 
     public Client( ) {
-        //loadChatWindow();
         userN = null;
         passW = null;
         message = null;
@@ -60,9 +57,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
     //connect to Server
     protected void connectToServer( ) throws IOException{
 
-//        chatWindow.updateMainWindow("Attempting conection...");
         this.connection = new Socket(serverIP, portNum);
-//        chatWindow.updateMainWindow("Connected to Chit Chat");
     }
 
     protected void setupStreams( ) throws IOException {
@@ -119,34 +114,13 @@ protected void showMessage(final String mess){
     }
     public void startClient() {
         System.out.println("Thread: " + Thread.currentThread().getId());
-      // cc = new ClientConnection(connection, this);
         cChat = new ClientChatting(connection, this);
-        //cc.start();
-        //cChat.start();
 
-// cc.start();
         loadChatWindow();
         System.out.println("Thread: " + Thread.currentThread().getId());
         updateUserList(objInp);
-        //cc = new ClientConnection(connection, this);
-        //cChat = new ClientChatting(connection, this);
-        //cc.start();
         cChat.start();
         while (true) {
-            //try {
-               // String instr = (String) objInp.readObject();
-              //  if (instr.equals("Update"))
-                  //  updateUserList(objInp);
-                   // cc.updateUserList();
-                //else if (instr.equals("Message"))
-                    //cChat.whileChatting();
-
-            //} catch (IOException e) {
-              //  e.printStackTrace();
-            //} catch (ClassNotFoundException e) {
-              ///  e.printStackTrace();
-            //}
-            //whileChatting();
             cChat.whileChatting();
         }
     }
@@ -155,7 +129,6 @@ protected void showMessage(final String mess){
 
         //Load the main Chat Window
         chatWindow = new MainChatGUI();
-        //Client client = this;
         chatWindow.init(this);
 
         frameMain = new JFrame("Chit Chat");
@@ -176,7 +149,7 @@ protected void showMessage(final String mess){
     }
 
     protected void publicMessage(String toSend) throws IOException {
-        objOut.writeObject("PUBLIC");/////////////////////////////////TESTING
+        objOut.writeObject("PUBLIC");
         objOut.writeObject(toSend);
         objOut.flush();
     }
@@ -193,11 +166,6 @@ protected void showMessage(final String mess){
 
     }
 
-    /*
-    public void updateUserList(String name){
-        chatWindow.adduser(name);
-    }
-*/
 
     public void updateUserList(ObjectInputStream objInp){
         try {

@@ -8,6 +8,7 @@ import javax.swing.*;
 
 /**
  * Created by niruiz3964 on 5/22/17.
+ * Login in is  a child of Client. It handles the login process for the chit chat application.
  */
 public class Login extends Client implements ActionListener{
     private JFrame loginWindow;

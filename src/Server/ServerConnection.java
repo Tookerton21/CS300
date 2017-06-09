@@ -29,7 +29,6 @@ public class ServerConnection extends Thread {
 
     public void sendMessageToClient(String text){
         try {
-          //  output.writeObject("Message");
             output.writeObject(text);
             output.writeObject(server.getOnlineUsers());
             output.flush();

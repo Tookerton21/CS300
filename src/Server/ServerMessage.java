@@ -14,24 +14,18 @@ public class ServerMessage extends Thread {
     }
 
     public void run(){
-     //   while(true){
             listenMessage();
-       // }
     }
 
     protected void listenMessage(){
-        //while(true){
             String textIn = null;
             try {
                 textIn = (String)sc.input.readObject();
-                //if(textIn != null)
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             sc.sendStringtoAllClients(textIn);
-        //}
     }
 }

@@ -4,8 +4,6 @@ import Client.MainChatGUI.MainChatGUI;
 import java.util.ArrayList;
 import java.io.*;
 import java.net.*;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -16,9 +14,8 @@ import java.util.Scanner;
  * Created by niruiz3964 on 5/17/17.
  */
 public class Server extends JFrame{
-    private JTextField userText;
-    private JTextArea chatWindow;
-   private ObjectOutputStream output;
+
+    private ObjectOutputStream output;
     private ObjectInputStream input;
     private ServerSocket server;
     private Socket connection;
@@ -26,32 +23,12 @@ public class Server extends JFrame{
     protected LinkedList<String[] > linkedList;
     protected ArrayList<ServerConnection> connections;
     protected LinkedList<String> onlineUsers;
-    private BufferedReader buffInput;
-    private PrintWriter pWrite;
     private String register;
     private String login;
-    private MainChatGUI mainChatGUI;
 
     public Server(){
 
-
         super("Chit Chat Messenger");
-        userText = new JTextField();
-        userText.setEditable(false); //Dont allow to message to anyone without connection
-        userText.addActionListener(
-                        new ActionListener(){
-                         public void actionPerformed(ActionEvent event){
-                            // sendMessage(event.getActionCommand());
-                             userText.setText("");
-                         }
-                        }
-        );
-        add(userText, BorderLayout.NORTH);
-        chatWindow = new JTextArea();
-        add(new JScrollPane(chatWindow));
-        setSize(300,150);
-        setVisible(true);
-
         register = "register";
         login = "login";
         linkedList = new LinkedList<String[]>();
@@ -61,7 +38,7 @@ public class Server extends JFrame{
 
     //Set up and run the server
     public void startRunning(){
-
+        System.out.println("Server is up and running");
         try {
             server = new ServerSocket(6666);
         } catch (IOException e) {
@@ -89,52 +66,19 @@ public class Server extends JFrame{
         output = new ObjectOutputStream(socket.getOutputStream());
         output.flush();
         input = new ObjectInputStream(socket.getInputStream());
-        showMessage("\n Streams are now setup! \n");
     }
 
     //Close Streams and sockets after done chatting
     private void closeCon(){
-        showMessage("\n closing connections..");
-        ableToType(false);
         try{
-              pWrite.close();
-              buffInput.close();
-//            output.close();
-  //          input.close();
             connection.close(); //closes the socket
-
         }catch (IOException ioException){
             ioException.printStackTrace();
         }
     }
 
-        //Updates chatWindow
-    private void showMessage(final String text){
-        //create a thread to update the GUI
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        chatWindow.append(text);
-                    }
-                }
-        );
-    }
-
-    //Let user to type
-    private void ableToType(final boolean tof){
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        userText.setEditable(tof);
-                    }
-                }
-        );
-    }
-
     //Add a new user to the list
-    public boolean register(String username, String password, ObjectOutputStream output) throws IOException {
+    protected boolean register(String username, String password, ObjectOutputStream output) throws IOException {
 
         String user[] = {username, password};
 
@@ -309,7 +253,7 @@ public class Server extends JFrame{
         }
     }
 
-    public String[] getOnlineUsers(){
+    protected String[] getOnlineUsers(){
         int size = onlineUsers.size();
         String onlineU[] = new String[size];
         int pos =0;
