@@ -17,14 +17,14 @@ import java.util.Iterator;
 /**
  * Created by niruiz3964 on 5/24/17.
  */
-public class MainChatGUI implements Serializable{
+public class MainChatGUI{
     private static int MAX = 1000;
     private JPanel mainChatWindow;
     private JButton sendButton;
     private JTextArea mainChat;
     private JTextField messageText;
     private JPanel users;
-    private JScrollBar scrollBar1;
+    private JScrollBar scrollBar2;
     private Client client;
     private ArrayList<JButton> list;
 

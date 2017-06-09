@@ -34,9 +34,6 @@ public class ClientChatting extends Thread {
         do{
             try{
                 System.out.println(input.available());
-          //      while(input.available() <= 0){
-            //        Thread.currentThread().sleep(2);
-              //  }
 
                 client.message = (String) input.readObject();
                 String list[] = (String[]) input.readObject();
@@ -48,9 +45,7 @@ public class ClientChatting extends Thread {
                 client.showMessage("\nError, wrong Object type");
             } catch (IOException e) {
                 e.printStackTrace();
-            }// catch (InterruptedException e) {
-               // e.printStackTrace();
-             catch (NullPointerException n){
+            } catch (NullPointerException n){
                 canRun = false;
                 break;
             }

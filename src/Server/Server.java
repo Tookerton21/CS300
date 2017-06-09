@@ -61,7 +61,6 @@ public class Server extends JFrame{
 
     //Set up and run the server
     public void startRunning(){
-        //try{
 
         try {
             server = new ServerSocket(6666);
@@ -73,81 +72,25 @@ public class Server extends JFrame{
             while(true){
 
                 try{
-//                    server = new ServerSocket(6666);
                     Socket socket = server.accept();
-                   // ObjectOutputStream output;
-                    //ObjectInputStream input;
-                    //connection = socket;
-                    //setupStreams(socket, output, input);
-                    //String username = (String)input.readObject();
-                    //String password = (String)input.readObject();
-                    //logInfo(username, password);
                     ServerConnection sc = new ServerConnection(socket, this);
                     connections.add(sc);
                     sc.start();
-                    //Connect and have conversation
-                  //  waitForConnection();
-
-                   // loginReg();
-                   // addUsers();
-                    //whileChatting();
-              //  }catch(EOFException eofException){
-                //    showMessage("\n Server ended the connection");
-                //} catch (ClassNotFoundException e) {
-                 //   e.printStackTrace();
-                //} //catch (ClassNotFoundException e) {
-                    //e.printStackTrace();
-                //} finally{
-                  //  closeCon();
-                //}
             }catch (IOException ioException){
                     ioException.printStackTrace();
                 }
-
-        }//catch (IOException ioException){
-           // ioException.printStackTrace();
-      //  }
+        }
     }
 
 
-    //Wait for connection, then display connection information
-    /*private void waitForConnection() throws IOException{
-        showMessage("Waiting for someone to connect...");
-        connection = server.accept();
-        new Thread(new WorkerRunnable(connection, "Multhread server")).start();
-        //logInfo();
-
-            //connection.close();
-    }*/
-
     //get stream to send and recieve data
     private void setupStreams(Socket socket) throws IOException{
-        //buffInput = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        //pWrite = new PrintWriter(new OutputStreamWriter(connection.getOutputStream()));
-        //pWrite.flush();
 
         output = new ObjectOutputStream(socket.getOutputStream());
         output.flush();
         input = new ObjectInputStream(socket.getInputStream());
         showMessage("\n Streams are now setup! \n");
     }
-
-    //During the chat conversation
-
-   /* private void whileChatting() throws IOException{
-        String message = "You are now connected! ";
-        sendMessage(message);
-        ableToType(true);
-        do{
-            try{
-                message = (String) input.readObject();
-                showMessage("\n"+message);
-            }catch (ClassNotFoundException classNotFoundException){
-                showMessage("Invalide user info");
-            }
-        }while(!message.equals("CLIENT - END"));
-    }*/
-
 
     //Close Streams and sockets after done chatting
     private void closeCon(){
@@ -164,17 +107,6 @@ public class Server extends JFrame{
             ioException.printStackTrace();
         }
     }
-
-    //send message to client
-   /* private void sendMessage(String message){
-        try{
-            output.writeObject("Server - "+message );
-            output.flush();
-            showMessage("\nServer - "+message);
-        }catch(IOException ioException){
-            chatWindow.append("\n ERROR, Cant send message");
-        }
-    }*/
 
         //Updates chatWindow
     private void showMessage(final String text){
@@ -234,7 +166,6 @@ public class Server extends JFrame{
             String fileName = "users.text";
             File inFile = new File(fileName);
             Scanner scanner = new Scanner(inFile);
-           // scanner.useDelimiter("&");
 
             while(scanner.hasNextLine()) {
                 userN = scanner.next();
@@ -293,17 +224,13 @@ public class Server extends JFrame{
             }
 
             //Send updated gui back to Clien
-           // output.writeObject((int) size);
-           // output.writeObject("Update");
+
             output.writeObject(userList);
             output.writeObject(onlineU);
             output.flush();
-           // Thread.sleep(4);
 
         } catch (IOException e) {
             e.printStackTrace();
-      //  } catch (InterruptedException e) {
-      //      e.printStackTrace();
         }
     }
     private void loginReg() throws ClassNotFoundException {
@@ -311,22 +238,11 @@ public class Server extends JFrame{
             //Get information with the client
             String logReg = (String) input.readObject();
             String username = (String) input.readObject();
-            String password = (String) input.readObject();//buffInput.readLine();
-
+            String password = (String) input.readObject();
             if(logReg.equals(register)){
                 boolean res = register(username, password, output);
                 output.writeObject(res);
                 output.flush();
-/*
-                if(res == true) {
-                    output.writeObject("true");
-                    output.flush();
-                }
-                else{
-                    pWrite.println("false");
-                    pWrite.flush();
-                }*/
-
             }
 
             if(logReg.equals(login)){
@@ -345,19 +261,6 @@ public class Server extends JFrame{
         output.writeObject(res);
         output.flush();
         return res;
-        /*
-        if(res == true) {
-            output.writeObject("true");
-            output.flush();
-            return true;
-        }
-
-        else{
-            pWrite.println("false");
-            pWrite.flush();
-            return false;
-        }
-*/
     }
 
     private boolean verifyUser(String userN, String passW){
@@ -402,7 +305,6 @@ public class Server extends JFrame{
     public void displayUsers(){
         Iterator<String[]> itr = linkedList.iterator();
         while(itr.hasNext()){
-          //  for(int i=0; i<4; ++i)
                 System.out.println(Arrays.toString(itr.next()));
         }
     }
@@ -419,29 +321,4 @@ public class Server extends JFrame{
         }
         return onlineU;
     }
-
-  //  public class WorkerRunnable implements Runnable{
-    //    protected Socket client;
-      //  protected String serverT;
-
-        //public WorkerRunnable(Socket client, String serverT){
-          //  this.client = client;
-            //this.serverT = serverT;
-        //}
-
-        //public void run(){
-          //  try{
-            //    setupStreams(connection);
-              //  loginReg();
-               // addUsers(connection);
-               // whileChatting();
-          //  } catch (ClassNotFoundException e) {
-                //e.printStackTrace();
-            //} catch (IOException e) {
-               // e.printStackTrace();
-            //}
-        //}
-
-   // }
-
 }

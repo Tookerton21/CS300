@@ -3,13 +3,8 @@ package Client;
 import Client.SigninGUI.SigninGUI;
 import Client.SigninGUI.Error;
 import java.awt.event.*;
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.io.IOException;
 import javax.swing.*;
-import java.net.Socket;
 
 /**
  * Created by niruiz3964 on 5/22/17.
@@ -25,7 +20,6 @@ public class Login extends Client implements ActionListener, MouseListener {
     public Login(){
         //Load the login in window
         super( );
-      //  loadLogin();
         startL();
     }
 
@@ -39,9 +33,6 @@ public class Login extends Client implements ActionListener, MouseListener {
                 e.printStackTrace();
             }
         }
-        //loadChatWindow();
-        //startClient();
-        //super.run();
         System.out.println("exiting StartL");
     }
 
@@ -100,14 +91,6 @@ public class Login extends Client implements ActionListener, MouseListener {
            boolean tof = (boolean)objInp.readObject();
 
         return tof;
-        /*try {
-            String tof = (String) objInp.readObject();
-            if(tof.equals("true")) {
-                System.out.println("User added");
-                return true;
-            }
-*/
-
     }
 
 
@@ -147,7 +130,6 @@ public class Login extends Client implements ActionListener, MouseListener {
         }
 
          if(e.getActionCommand().equals("Login")) {
-            //System.out.println("Login Button Clicked");
             try {
                 userN = login.getUsername();
                 passW = login.getPassword();
