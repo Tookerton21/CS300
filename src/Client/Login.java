@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Created by niruiz3964 on 5/22/17.
  */
-public class Login extends Client implements ActionListener, MouseListener {
+public class Login extends Client implements ActionListener{
     private JFrame loginWindow;
     private JFrame errorWindow;
     private SigninGUI login;
@@ -171,8 +171,5 @@ public class Login extends Client implements ActionListener, MouseListener {
              super.actionPerformed(e);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
-    }
+
 }

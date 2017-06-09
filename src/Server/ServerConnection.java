@@ -47,6 +47,7 @@ public class ServerConnection extends Thread {
 
     protected void sendPrivMessage(String toSend, String message){
         //Look for the user
+        boolean online = false;
         for(int index = 0; index<server.connections.size(); ++index){
 
             ServerConnection sc = server.connections.get(index);
@@ -54,8 +55,11 @@ public class ServerConnection extends Thread {
             if(sc.username.equals(toSend)){
                 sc.sendMessageToClient("\n\t....PRIVATE MESSAGE....\n"+"From: "+ username+": "+
                         message+"\n\t....END OF MESSAGE.....");
+                online = true;
             }
         }
+        if(online == false)
+            sendMessageToClient("Not Online");
     }
 
     public void run(){
